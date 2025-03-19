@@ -6,7 +6,7 @@ import sys
 sys.set_int_max_str_digits(0)
 
 def cpu_heavy_task(n: int) -> float:
-    number = n**11 + n # 2**n + n
+    number = n**10 + n # 2**n + n
 
     start_time = timer()
     # print(start_time)
