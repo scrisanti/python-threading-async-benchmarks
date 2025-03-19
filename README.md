@@ -21,3 +21,11 @@ Multiprocessing:
 For Loop: 232.16s 
 
 Hardware: Macbook Air M1, 8 cores, 8GB RAM
+
+# Running this repo
+
+From the main repo directory, run the following command
+
+`uv run src/main-mp.py`
+
+_NOTE:_ The Log directory is currently __NOT__ automatically created, so that will need to be done manually.
