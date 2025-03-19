@@ -1,0 +1,49 @@
+version: 1
+ 
+formatters:
+ 
+  standard:
+    format: '%(asctime)s | %(levelname)-8s | %(filename)-16s %(funcName)-20s:%(lineno)-4s | %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  simple:
+    format: '%(asctime)s - %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+ 
+handlers:
+ 
+  console:
+    class: logging.StreamHandler
+    level: WARN
+    formatter: simple
+    stream: ext://sys.stdout
+ 
+  file_handler:
+    class: logging.handlers.RotatingFileHandler
+    formatter: standard
+    filename: logs/logfile.log
+    level: DEBUG
+    maxBytes: 500000 # Max Size of File
+    backupCount: 20
+    encoding: utf8
+ 
+  email_handler:
+    class: logging.handlers.SMTPHandler
+    formatter: standard
+    level: ERROR
+    mailhost: 'fake.host.test.com'
+    fromaddr: 'fake.email@test.com'
+    toaddrs: ['fake.email@test.com']
+    subject: 'Error'
+ 
+loggers:
+  base:
+    level: INFO
+    handlers: [file_handler, email_handler]
+    propagate: no
+  dev:
+    level: DEBUG
+    handlers: [file_handler, console]
+    propagate: yes
+   
+root:
+  level: NOTSET
