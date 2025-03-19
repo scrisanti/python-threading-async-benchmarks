@@ -1,6 +1,7 @@
 import multiprocessing
 from timeit import default_timer as timer
 import math
+from utils.setup_logging import logger
 
 import sys
 sys.set_int_max_str_digits(0)
@@ -9,23 +10,23 @@ def cpu_heavy_task(n: int) -> float:
     number = n**10 + n # 2**n + n
 
     start_time = timer()
-    # print(start_time)
+    # logger.info(start_time)
     count_pf = count_prime_factors(number)
-    print('Computing Factorial')
+    logger.info('Computing Factorial')
 
     fact_start_time = timer()
-    # print(fact_start_time)
+    # logger.info(fact_start_time)
     fact = math.factorial(n**2)
 
     end_time = timer()
-    # print(end_time)
+    # logger.info(end_time)
 
-    print(f'Total Task Time: {end_time - start_time:.4f}s - ({end_time-fact_start_time:.4f}s {fact_start_time-start_time:.4f}s)')
-    print(f'{number} has {count_pf} prime factors and ({n}^2)! has {len(str(fact))} digits')
+    logger.info(f'Total Task Time: {end_time - start_time:.4f}s - ({end_time-fact_start_time:.4f}s {fact_start_time-start_time:.4f}s)')
+    logger.info(f'{number} has {count_pf} prime factors and ({n}^2)! has {len(str(fact))} digits')
 
 
 def count_prime_factors(n: int) -> int:
-    print(f'Finding prime factors for {n}')
+    logger.info(f'Finding prime factors for {n}')
     count = 0
     i = 2
 
@@ -45,7 +46,7 @@ def main(num_list = [66,72,35,43]):
     """
     Main Function for testing/benchmarking multiprocessing and async
     """
-    print(f' {"Start of Multiprocessing":-^50}')
+    logger.info(f' {"Start of Multiprocessing":-^50}')
     start_mp = timer()
 
     with multiprocessing.Pool(processes=len(num_list)) as pool:
@@ -53,18 +54,18 @@ def main(num_list = [66,72,35,43]):
     
     end_mp = timer()
 
-    print(f'Total Multiprocessing Time: {end_mp - start_mp:.4f}s')
-    print("\n")
+    logger.info(f'Total Multiprocessing Time: {end_mp - start_mp:.4f}s')
+    logger.info("\n")
 
-    print(f' {"Start of Looping":-^50}')
+    logger.info(f' {"Start of Looping":-^50}')
     start_looping = timer()
 
     for n in num_list:
         cpu_heavy_task(n)
 
-    print('Ended Heavy Task')
+    logger.info('Ended Heavy Task')
     end_looping = timer()
-    print(f'Total Loop Time: {end_looping - start_looping:.4f}s')
+    logger.info(f'Total Loop Time: {end_looping - start_looping:.4f}s')
 
 
 if __name__ == "__main__":
